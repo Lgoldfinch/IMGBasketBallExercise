@@ -22,39 +22,6 @@ class ParseEventSpec extends TestHelper {
     }
   }
 
-//  "Event" should {
-//
-//      val twoPointsScored = 2
-//      Event(exampleEventAsBinary1).pointsScored shouldBe twoPointsScored
-//    }
-//    "extract the correct value" when {
-//      "the binary slot for team who scored is 0" in {
-//        Event(exampleEventAsBinary1).whoScored shouldBe Team1
-//      }
-//      "the binary slot for team who scored is 1" in {
-//        val event = "00000000011110000001000000000110"
-//        Event(event).whoScored shouldBe Team2
-//      }
-//    }
-//
-//    "extract the correct value for team 2's points total" in {
-//      val team2Total = 0
-//      Event(exampleEventAsBinary1).team2Total shouldBe team2Total
-//    }
-//
-//    "extract the correct value for team 1's points total" in {
-//      val team1Total = 2
-//      Event(exampleEventAsBinary1).team1Total shouldBe team1Total
-//    }
-//
-//    "extract the correct value for elapsed match time" in {
-//      val secondsOfPlay = 15
-//      Event(exampleEventAsBinary1).elapsedMatchTime shouldBe secondsOfPlay
-//    }
-//  }
-
-
-
   "feedData" should {
     "convert the hexadecimal values in the bit pattern specification to the expected events" when {
 
