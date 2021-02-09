@@ -1,5 +1,7 @@
 package models
 
+import validation.ValidateData._
+
 
 object ParseEvent {
 
@@ -44,8 +46,14 @@ object ParseEvent {
         convertToEvent(hexEvent)
       })
 
-    Events(convertedEvents)
-//    convertedEvents.foldLeft(convertedEvents)((a, event) => ValidateExistingData.compareEvents(a, event))
+    validateEvents(Events(convertedEvents))
+  }
+
+  def addNewData(eventsAsHexadecimals: List[Int], existingEvents: Events): Events = {
+    val newEvents: List[Event] = feedData(eventsAsHexadecimals).values
+    val allEvents: List[Event] = existingEvents.values ++ newEvents
+
+    existingEvents.copy(values = allEvents)
   }
 
   private val lengthOfEvent = 32

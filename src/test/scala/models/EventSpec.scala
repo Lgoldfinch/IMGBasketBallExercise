@@ -2,6 +2,8 @@ package models
 
 import models.helpers.TestHelper
 
+import ParseEvent._
+
 class EventSpec extends TestHelper {
 
   "Events" should {
@@ -11,11 +13,28 @@ class EventSpec extends TestHelper {
       event2.team1Total shouldBe team1Score
       event2.team2Total shouldBe team2Score
 
-      events.getMatchScore shouldBe s"Team 1 leads, $team1Score-$team2Score"
-     }
+      twoEvents.getMatchScore shouldBe s"Team 1 leads, $team1Score-$team2Score"
+    }
 
     "getLastEvent" in {
-      events.getLastEvent shouldBe event2
+      twoEvents.getLastEvent shouldBe event2
+    }
+
+    "getLastEvents" should {
+      "get final event in a list" in {
+        val finalEventInList = convertToEvent(exampleDataFromTestSpec.last)
+
+        eventsCreatedByFeedData.getLastEvents(1).values.head shouldBe finalEventInList
+      }
+      "get last two events in a list" in {
+        val hexCode1 = 0x29f981a2
+        val hexCode2 = 0x48332327
+        val convert1 = convertToEvent(hexCode1)
+        val convert2 = convertToEvent(hexCode2)
+        val lastTwoEvents = List(convert1, convert2)
+
+        eventsCreatedByFeedData.getLastEvents(2).values.take(2) shouldBe lastTwoEvents
+      }
     }
   }
 }

@@ -4,12 +4,21 @@ import models.{Event, Events}
 
 import scala.annotation.tailrec
 
-case object ValidateExistingData {
+object ValidateData {
+
+  def validateEvents(events: Events): Events = {
+    val validatedEvents = events.values.foldLeft(List[Event]())((constructedListOfEvents, event) =>
+      constructedListOfEvents match {
+        case Nil => List(event)
+        case ::(head, _) => constructedListOfEvents ++ List(compareEvents(head, event))
+        }
+      )
+    Events(validatedEvents)
+  }
+
 
   @tailrec
   final def compareEvents(oldEvent: Event, newEvent: Event): Event = {
-//    val oldEvent = existingEvents.getLastEvent
-
     (newEvent, oldEvent) match {
       case (newEvent, oldEvent) if newEvent.team1Total < oldEvent.team1Total =>
         compareEvents(newEvent.copy(team1Total = oldEvent.team1Total),  oldEvent )
