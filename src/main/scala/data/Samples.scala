@@ -2,7 +2,7 @@ package data
 
 object Samples {
 
-  val sample1: Set[Int] = Set(
+  val sample1: List[Int] = List(
     0x801002,
   0xf81016,
   0x1d8102f,
@@ -33,7 +33,7 @@ object Samples {
   0x12b0d8ea
   )
 
-  val sample2: Set[Int] = Set(
+  val sample2: List[Int] = List(
     0x781002,
   0xe01016,
   0x1081014,

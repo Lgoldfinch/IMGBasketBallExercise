@@ -1,14 +1,13 @@
 package models.helpers
 
-import models.Event
+import models.{Event, ParseEvent}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
 
 trait TestHelper extends Matchers with AnyWordSpecLike {
-   val exampleEventAsBinary1: String = "00000000011110000001000000000010"
-   val exampleEventAsBinary2: String = "00000101101110000001000001000110"
-
-   val event1: Event = Event(exampleEventAsBinary1)
-   val event2: Event = Event(exampleEventAsBinary2)
+   val exampleHexValue1: Int = 0x781002
+   val exampleHexValue2: Int = 0x1310c8a1
+   val event1: Event = ParseEvent.convertToEvent(exampleHexValue1)
+   val event2: Event = ParseEvent.convertToEvent(exampleHexValue2)
 }
 

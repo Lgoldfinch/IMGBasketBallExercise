@@ -1,29 +1,30 @@
 package models
 
-object ParseEvent { // case class
+
+object ParseEvent {
+
   def convertToEvent(hexValue: Int): Event = {
-    val expectedLengthOfEvent = 32
     val eventAsBinary: String = hexValue.toBinaryString
-    val lengthDifference: Int = expectedLengthOfEvent - eventAsBinary.length
+    val lengthDifference: Int = lengthOfEvent - eventAsBinary.length
 
     if (lengthDifference == 0) {
-      convertBinaryIntoEvent(eventAsBinary)
+      buildEvent(eventAsBinary)
     } else {
       val eventWithPrecedingZeroes = ("0" * lengthDifference) ++ eventAsBinary
 
-      convertBinaryIntoEvent(eventWithPrecedingZeroes)
+      buildEvent(eventWithPrecedingZeroes)
     }
   }
 
-  def convertBinaryIntoEvent(binaryEvent: String): Event = {
-    val pointsScored: Int = convertBinaryIntoEvent(binaryEvent, indexOfPointsScored, lengthOfEvent)
-    val whoScored: Team = convertBinaryIntoEvent(binaryEvent, indexOfWhoScored, indexOfPointsScored) match {
+  def buildEvent(eventAsBinaryString: String): Event = {
+    val pointsScored: Int = convertBinaryIntoEvent(eventAsBinaryString, indexOfPointsScored, lengthOfEvent)
+    val team2Total: Int = convertBinaryIntoEvent(eventAsBinaryString, indexOfTeam2Total, indexOfWhoScored)
+    val team1Total: Int = convertBinaryIntoEvent(eventAsBinaryString, indexOfTeam1Total, indexOfTeam2Total)
+    val elapsedMatchTime: Int = convertBinaryIntoEvent(eventAsBinaryString, 0, indexOfTeam1Total)
+    val whoScored: Team = convertBinaryIntoEvent(eventAsBinaryString, indexOfWhoScored, indexOfPointsScored) match {
       case 0 => Team1
       case 1 => Team2
     }
-    val team2Total: Int = convertBinaryIntoEvent(binaryEvent, indexOfTeam2Total, indexOfWhoScored)
-    val team1Total: Int = convertBinaryIntoEvent(binaryEvent, indexOfTeam1Total, indexOfTeam2Total)
-    val elapsedMatchTime: Int = convertBinaryIntoEvent(binaryEvent, 0, indexOfTeam1Total)
 
     Event(
       pointsScored,
@@ -37,13 +38,14 @@ object ParseEvent { // case class
   def convertBinaryIntoEvent(eventAsBinaryString: String, startIndex: Int, endIndex: Int): Int =
     Integer.parseInt(eventAsBinaryString.substring(startIndex, endIndex), 2)
 
-  def feedData(rawEvents: Set[Int]): Events = {
-    val convertedEvents: Set[Event] = rawEvents.map(
+  def feedData(rawEvents: List[Int]): Events = {
+    val convertedEvents: List[Event] = rawEvents.map(
       hexEvent => {
         convertToEvent(hexEvent)
       })
 
     Events(convertedEvents)
+//    convertedEvents.foldLeft(convertedEvents)((a, event) => ValidateExistingData.compareEvents(a, event))
   }
 
   private val lengthOfEvent = 32

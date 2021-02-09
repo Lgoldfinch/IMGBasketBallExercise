@@ -9,7 +9,7 @@ case class Event(
                   elapsedMatchTime: Int
                 )
 
-case class Events(values: Set[Event]) {
+case class Events(values: List[Event]) {
   val getLastEvent: Event = values.last
 
   val queryLastEvent: QueryEvent = QueryEvent(
