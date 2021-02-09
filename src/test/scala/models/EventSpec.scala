@@ -1,8 +1,7 @@
 package models
 
+import models.ParseEvent._
 import models.helpers.TestHelper
-
-import ParseEvent._
 
 class EventSpec extends TestHelper {
 

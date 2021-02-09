@@ -41,12 +41,16 @@ object ParseEvent {
     Integer.parseInt(eventAsBinaryString.substring(startIndex, endIndex), 2)
 
   def feedData(rawEvents: List[Int]): Events = {
-    val convertedEvents: List[Event] = rawEvents.map(
-      hexEvent => {
-        convertToEvent(hexEvent)
-      })
+    val moreEvents = Events(convertedEvents(rawEvents))
 
-    validateEvents(Events(convertedEvents))
+    validateAndCleanEvents(moreEvents)
+  }
+
+  def convertedEvents(rawEvents: List[Int]): List[Event] = {
+    rawEvents.map(
+    hexEvent => {
+      convertToEvent(hexEvent)
+    })
   }
 
   def addNewData(eventsAsHexadecimals: List[Int], existingEvents: Events): Events = {

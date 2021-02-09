@@ -1,10 +1,9 @@
 package models
 
-import data.Samples
 import models.ParseEvent._
 import models.helpers.TestHelper
 import org.scalatest.Assertion
-
+import data.Samples._
 class ParseEventSpec extends TestHelper {
   "convertToEvent" should {
     "turn hexadecimal value into an Event" in {
@@ -42,15 +41,30 @@ class ParseEventSpec extends TestHelper {
     }
   }
 
-  "Sample data2" in {
-    println(feedData(Samples.sample2).values)
+
+  "Sample data 1 should be parsed and should be unchanged by validation" in {
+    val unvalidatedEvents = Events(convertedEvents(sample1))
+    val validatedEvents = feedData(sample1)
+
+    unvalidatedEvents shouldBe validatedEvents
   }
 
-    def makeTests(pointsScored: Int, whoScored: Team, elapsedTime: Int): Event => Assertion =
-      event => {
-        event.pointsScored shouldBe pointsScored
-        event.whoScored shouldBe whoScored
-        event.elapsedMatchTime shouldBe elapsedTime
+  /**
+   * this test is commented out as I couldn't fully correct sample 2. More info on this in ValidateData object.
+   */
 
+  "Sample data 2 should be parsed and should be changed by validation" in {
+
+//    val unvalidatedEvents = Events(convertedEvents(sample2)).values
+//    val validatedEvents = feedData(sample2).values
+//
   }
+
+  private def makeTests(pointsScored: Int, whoScored: Team, elapsedTime: Int): Event => Assertion =
+    event => {
+      event.pointsScored shouldBe pointsScored
+      event.whoScored shouldBe whoScored
+      event.elapsedMatchTime shouldBe elapsedTime
+
+    }
 }

@@ -1,8 +1,8 @@
 package validation
 
-import models.{Event, Events}
 import models.helpers.TestHelper
-import ValidateData._
+import models.{Event, Events}
+import validation.ValidateData._
 
 class ValidateDataSpec extends TestHelper {
 
@@ -20,9 +20,7 @@ class ValidateDataSpec extends TestHelper {
 
       val validatedEvents = Events(List(event2, validatedEvent))
 
-      validateEvents(inconsistentList) shouldBe validatedEvents
+      validateAndCleanEvents(inconsistentList) shouldBe validatedEvents
     }
   }
-
-
 }
